@@ -11,7 +11,8 @@
   width: 40px;
 }
 
-.edgeHide9{
+.boardColor9{
+  position: relative;
   background-color: #e4bc6f;
   height: 322px;
   width: 322px;
@@ -25,4 +26,14 @@
   top: 1px;
   left: 1px;
   z-index: 2;
+}
+
+.whiteBorder{
+  position: absolute;
+  top: -20px;
+  left: -20px;
+  z-index: 1;
+  border: 20px solid white;
+  width: 322px;
+  height: 322px;
 }
