@@ -3,7 +3,7 @@
   <div class="boardColor{{size}}">
     <div class="boardGrid" [ngStyle]="{'grid-template': 'repeat(' + size + ', 40px)/ repeat(' + size + ',40px)'}">
       <div *ngFor="let row of rows">
-        <div *ngFor="let column of columns">
+        <div *ngFor="let column of columns" class="vertex">
           <svg width="40px" height="40px" viewBox="0 0 40 40" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
             <!-- Generator: Sketch 50.2 (55047) - http://www.bohemiancoding.com/sketch -->
             <desc>Created with Sketch.</desc>
@@ -17,18 +17,29 @@
           </svg>
         </div>
       </div>
+      <div *ngIf="size === 9">
+        <span class="dot1" style="">
+
+        </span>
+      </div>
       <div *ngFor="let arrayAtX of gameState; let i = index">
         <div *ngFor="let pieceAtY of gameState[i], let j = index">
           <div *ngIf="pieceAtY" [ngStyle]="{'grid-row-start': (i + 1), 'grid-column-start': (j + 1)}" class="piece">
-            <div *ngIf="pieceAtY == 'white'">
+            <div *ngIf="pieceAtY == 'white'" class="stone">
               <img src="../assets/whiteStone.png" alt="">
             </div>
-            <div *ngIf="pieceAtY == 'black'">
+            <div *ngIf="pieceAtY == 'black'" class="stone">
               <img src="../assets/blackStone.png" alt="">
             </div>
           </div>
         </div>
       </div>
+      <div *ngFor="let dot of dotPosition" class="dotContainer">
+        <div class="dot" [ngStyle]="{'grid-row-start': dot[0], 'grid-column-start': dot[1]}">
+        </div>
+      </div>
+
+
     </div>
     <div class="whiteBorder">
     </div>

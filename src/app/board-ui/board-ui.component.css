@@ -1,3 +1,5 @@
+
+
 .boardGrid {
   display: grid;
   height: 40px;
@@ -6,9 +8,14 @@
   top: -19px;
   left: -19px;
 }
-.boardGrid div{
+
+.boardGrid .stone, .boardGrid .vertex{
   height: 40px;
   width: 40px;
+}
+
+.vertex:hover {
+  
 }
 
 .boardColor9{
@@ -16,7 +23,6 @@
   background-color: #e4bc6f;
   height: 322px;
   width: 322px;
-  /* overflow: hidden; */
   margin: auto;
   margin-top: 40px;
 }
@@ -30,10 +36,23 @@
 
 .whiteBorder{
   position: absolute;
-  top: -20px;
-  left: -20px;
+  top: -24px;
+  left: -24px;
   z-index: 1;
-  border: 20px solid white;
+  border: 24px solid #e4bc6f;
   width: 322px;
   height: 322px;
+  outline: 1px solid black;
+}
+
+.dot{
+  width: 8px;
+  height: 8px;
+  background-color: black;
+  border-radius: 50%;
+  position: absolute;
+  top: 16px;
+  left: 16px;
+
+  z-index: 1;
 }
