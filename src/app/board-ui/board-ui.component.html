@@ -1,0 +1,35 @@
+<div class="edgeHide{{size}}">
+  <div class="boardGrid" [ngStyle]="{'grid-template': 'repeat(' + size + ', 40px)/ repeat(' + size + ',40px)'}">
+    <div *ngFor="let row of rows">
+      <div *ngFor="let column of columns">
+        <svg width="40px" height="40px" viewBox="0 0 40 40" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+          <!-- Generator: Sketch 50.2 (55047) - http://www.bohemiancoding.com/sketch -->
+          <desc>Created with Sketch.</desc>
+          <defs></defs>
+          <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" stroke-linecap="square">
+              <g id="Artboard" stroke="#000000" stroke-width="1.5">
+                  <polyline id="Line-2" points="0 20 26.8081771 20 39.5891048 20"></polyline>
+                  <polyline id="Line-2" points="20 40 20 17.3419298 20 0.386211284"></polyline>
+              </g>
+          </g>
+        </svg>
+      </div>
+    </div>
+
+    <div *ngFor="let arrayAtX of gameState; let i = index">
+      <div *ngFor="let pieceAtY of gameState[i], let j = index">
+        <div *ngIf="pieceAtY" [ngStyle]="{'grid-row-start': (i + 1), 'grid-column-start': (j + 1)}" class="piece">
+          <div *ngIf="pieceAtY == 'white'">
+            <img src="../assets/whiteStone.png" alt="">
+          </div>
+          <div *ngIf="pieceAtY == 'black'">
+            <img src="../assets/blackStone.png" alt="">
+          </div>
+
+
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>

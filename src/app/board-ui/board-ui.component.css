@@ -1,0 +1,28 @@
+.boardGrid {
+  display: grid;
+  height: 40px;
+  width: 40px;
+  position: relative;
+  top: -19px;
+  left: -19px;
+}
+.boardGrid div{
+  height: 40px;
+  width: 40px;
+}
+
+.edgeHide9{
+  background-color: #e4bc6f;
+  height: 322px;
+  width: 322px;
+  /* overflow: hidden; */
+  margin: auto;
+  margin-top: 40px;
+}
+
+.piece {
+  position: absolute;
+  top: 1px;
+  left: 1px;
+  z-index: 2;
+}
