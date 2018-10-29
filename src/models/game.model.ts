@@ -6,18 +6,20 @@ export class Game {
   blackPlayer: Player;
   gameState: any[];
   activeGame: boolean;
-  currentTurn: Player; // either this.whitePlayer or this.blackPlayer;
+  activePlayer: string; // either "white" or "black"
+  passivePlayer: string;
   lastTurnPass: boolean;
-  whiteCaptures: number;
-  blackCaptures: number;
+  whiteCaptures: number; // whiteCaptures = the number of black stones the white player has captured
+  blackCaptures: number; // blackCaptures = ths number of white stones the black player has captured
 
   constructor(public dim: number, public white: Player, public black: Player) {
     this.dimension = dim;
     this.whitePlayer = white;
     this.blackPlayer = black;
     this.gameState = createNewGameState(dim);
-    this.active = true;
-    this.currentTurn = this.blackPlayer;
+    this.activeGame = true;
+    this.activePlayer = "black";
+    this.passivePlayer = "white";
     this.lastTurnPass = false;
     this.whiteCaptures = 0;
     this.blackCaptures = 0;
@@ -94,8 +96,59 @@ export class Game {
 
     return {
       liberties: liberties, // list of all empty points adjacent to members of the group. If the group is dead, liberties = [].
-      group: group}; // list of points in the group
+      group: group
+    }; // list of points in the group
   }
 
+  killGroup(public point: number[]) { // Set all stones in the same group as the given stone to null in this.gameState
+    const groupToKill = buildGroup(point);
+    groupToKill.group.forEach(neighbor => {
+      this.gameState[neighbor[0]][neighbor[1]] = null;
+    })
+  }
+
+  placeStone(public stone: number[]) {
+    const neighbors = this.checkAdjacencies(stone);
+    neighbors.forEach(neighbor => {
+      if (this.activePlayer == this.gameState[stone[0]][stone[1]]) { // if opponent has a stone in position neighbor, check for captures from newly placed stone
+        const group = this.buildGroup(neighbor); // get neighbor's entire group
+        if (group.liberties.length == 0) { // if neighbor group no longer has any liberties, kill it
+          const captures = group.liberties.length;
+          if (this.activePlayer == "white") {this.whiteCaptures += captures;}
+          else {this.blackCaptures += captures;}
+          this.killGroup(neighbor);
+        }
+      }
+    })
+    const group = this.buildGroup(stone);
+    if (group.liberties == 0) {this.illegalTurn();}
+    else {this.nextTurn();}
+  }
+
+  illegalMove(public point: number[]) { // Set a single stone to null in this.gameState
+    this.gameState[point[0]][point[1]] = null;
+  }
+
+  nextTurn() { // Actions to take when passing play to the next player
+    if (this.activePlayer == "white") {this.activePlayer = "black"; this.passivePlayer = "white";}
+    else {this.activePlayer = "white"; this.passivePlayer = "black";}
+  }
+
+  pass() {
+    if (this.lastTurnPass == false) {
+      this.lastTurnPass = true;
+    }
+    else {
+      this.endGame();
+    }
+  }
+
+  endGame() {
+    this.activeGame = false;
+  }
+
+  resign() {
+    this.endGame();
+  }
 
 }
