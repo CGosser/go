@@ -121,7 +121,7 @@ export class Game {
       }
     })
     const group = this.buildGroup(stone);
-    if (group.liberties == 0) {this.illegalTurn();}
+    if (group.liberties == 0) {this.illegalMove();}
     else {this.nextTurn();}
   }
 
