@@ -16,6 +16,8 @@ export class Game {
   winner: Player;
   margin: number;
   ko: number[];
+  komi: number;
+  gameCreated: Date;
 
   constructor(public dim: number, public white: Player, public black: Player) {
     this.dimension = dim;
@@ -31,6 +33,7 @@ export class Game {
     this.whiteScore = 0;
     this.blackScore = 0;
     this.ko = [-1,-1];
+    this.komi = this.decideKomi();
   }
 
   createNewGameState(N: number) {
@@ -43,6 +46,10 @@ export class Game {
       out.push(row);
     }
     return out;
+  }
+
+  decideKomi() {
+    return 6.5;
   }
 
   checkPoint(point: number[]) {  // point: number is an element of list {9, 13, 19}
@@ -122,15 +129,14 @@ export class Game {
     else {
       if (this.activePlayer == "white") {this.gameState[stone[0]][stone[1]] = "white";}
       else {this.gameState[stone[0]][stone[1]] = "black";}
-      let killed: number[];
+      let killed: number[] = [-1,-1];
       const neighbors = this.checkAdjacencies(stone);
       neighbors.forEach(neighbor => {
-        if (this.activePlayer == this.gameState[stone[0]][stone[1]]) { // if opponent has a stone in position neighbor, check for captures from newly placed stone
+        if (this.passivePlayer == this.gameState[neighbor[0]][neighbor[1]]) { // if opponent has a stone in position neighbor, check for captures from newly placed stone
           const group = this.buildGroup(neighbor); // get neighbor's entire group
           if (group.liberties.length == 0) { // if neighbor group no longer has any liberties, kill it
             const captures = group.group.length;
             if (captures == 1) {killed = group.group[0];}
-            else {killed = [-1,-1];}
             if (this.activePlayer == "white") {this.whiteCaptures += captures;}
             else {this.blackCaptures += captures;}
             this.killGroup(neighbor);
