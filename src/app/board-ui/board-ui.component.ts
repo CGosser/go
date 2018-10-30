@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { Game } from '../../models/game.model';
-import { gameStates } from '../../models/mock-game-states';
 import { Player } from '../../models/player.model';
 
 @Component({
