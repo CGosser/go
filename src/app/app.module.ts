@@ -6,6 +6,7 @@ import { AngularFireDatabaseModule } from 'angularfire2/database';
 
 import { AppComponent } from './app.component';
 import { BoardUIComponent } from './board-ui/board-ui.component';
+import { StartScreenComponent } from './start-screen/start-screen.component';
 
 export const firebaseConfig = {
   apiKey: masterFirebaseConfig.apiKey,
@@ -18,6 +19,7 @@ export const firebaseConfig = {
   declarations: [
     AppComponent,
     BoardUIComponent,
+    StartScreenComponent
   ],
   imports: [
     BrowserModule,

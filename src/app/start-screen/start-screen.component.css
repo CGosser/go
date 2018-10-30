@@ -1,0 +1,109 @@
+* {
+      -webkit-touch-callout: none;
+      -webkit-user-select: none;
+      -khtml-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+}
+
+
+.outer {
+  width: 100%;
+  position: absolute;
+  overflow: hidden;
+  display: flex;
+  justify-content: space-around;
+  height: 50vh;
+  margin-top: 20vh;
+}
+
+.outer #blackbig {
+  position: absolute;
+  animation: moveStones 10s 1;
+  animation-fill-mode: forwards;
+  opacity: .5;
+}
+.outer #whitebig {
+  position: absolute;
+  z-index: 2;
+  opacity: 1;
+  }
+
+.container {
+  margin: auto auto;
+  margin-top: 10vh;
+  width: 300px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  height: 20vh;
+  position: absolute;
+  z-index: 4;
+}
+
+.inputDiv {
+  display: flex;
+  justify-content: space-around;
+
+}
+
+.inputDiv input {
+  height: 20px;
+  padding-left: 5px;
+  border: none;
+  background-color: rgba(0,0,0,0);
+  font-size: 14px;
+  text-align: center;
+}
+
+.inputDiv :focus {
+  outline-width: 0;
+}
+
+.boardDiv input {
+  display: none;
+}
+
+.boardDiv label{
+  height: 20px;
+  width: 60px;
+  cursor: pointer;
+  color: #b2b2b2;
+  text-align: center;
+}
+
+#boardSize1  {
+  text-align: right;
+}
+
+input:checked + label{
+  color: #444444;
+}
+
+
+button {
+  background-color: rgba(0, 0, 0, 0);
+  padding: 9px;
+  border: 1px solid #CCC;
+}
+
+.inputDiv input, .boardDiv select, .buttonDiv button {
+  font-family: 'Roboto Slab', serif;
+}
+
+.boardDiv, .buttonDiv {
+  display: flex;
+  justify-content: center;
+}
+
+h1 {
+  font-family: 'Montserrat', sans-serif;
+  text-align: center;
+}
+
+@keyframes moveStones {
+  100% {
+    transform: translate(0px);
+  }
+}
