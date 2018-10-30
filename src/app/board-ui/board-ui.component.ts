@@ -15,7 +15,7 @@ export class BoardUIComponent implements OnInit {
   size: number = this.testGame.dimension;
   rows: number[] = Array(this.size);
   columns: number[] = Array(this.size);
-  dotPosition = [[3,3],[3,7],[7,3],[7,7],[5,5]]
+  dotPosition = [[[3,3],[3,7],[7,3],[7,7],[5,5]], [[4,4],[4,10],[10,10],[10,4],[7,7]], [[4,4], [4,10], [4,16], [10,4], [10,10], [10,16], [16,4], [16,10], [16,16]]];
 
 
   constructor() { }

@@ -23,12 +23,29 @@
 }
 
 
-
 .boardColor9{
   position: relative;
   background-color: #e4bc6f;
   height: 322px;
   width: 322px;
+  margin: auto;
+  margin-top: 40px;
+}
+
+.boardColor13{
+  position: relative;
+  background-color: #e4bc6f;
+  height: 480px;
+  width: 480px;
+  margin: auto;
+  margin-top: 40px;
+}
+
+.boardColor19{
+  position: relative;
+  background-color: #e4bc6f;
+  width: 720px;
+  height: 720px;
   margin: auto;
   margin-top: 40px;
 }
@@ -55,7 +72,7 @@
   cursor: grabbing;
 }
 
-.whiteBorder{
+.whiteBorder9{
   position: absolute;
   top: -24px;
   left: -24px;
@@ -63,6 +80,30 @@
   border: 24px solid #e4bc6f;
   width: 322px;
   height: 322px;
+  outline: 1px solid black;
+  pointer-events: none;
+}
+
+.whiteBorder13{
+  position: absolute;
+  top: -24px;
+  left: -24px;
+  z-index: 1;
+  border: 24px solid #e4bc6f;
+  width: 482px;
+  height: 482px;
+  outline: 1px solid black;
+  pointer-events: none;
+}
+
+.whiteBorder19{
+  position: absolute;
+  top: -24px;
+  left: -24px;
+  z-index: 1;
+  border: 24px solid #e4bc6f;
+  width: 722px;
+  height: 722px;
   outline: 1px solid black;
   pointer-events: none;
 }

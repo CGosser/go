@@ -40,13 +40,28 @@
             </div>
         </div>
       </div>
-      <div *ngFor="let dot of dotPosition" class="dotContainer">
-        <div class="dot" [ngStyle]="{'grid-row-start': dot[0], 'grid-column-start': dot[1]}">
+      <div *ngIf="size == 9">
+        <div *ngFor="let dot of dotPosition[0]" class="dotContainer">
+          <div class="dot" [ngStyle]="{'grid-row-start': dot[0], 'grid-column-start': dot[1]}">
+          </div>
+        </div>
+      </div>
+      <div *ngIf="size == 13">
+        <div *ngFor="let dot of dotPosition[1]" class="dotContainer">
+          <div class="dot" [ngStyle]="{'grid-row-start': dot[0], 'grid-column-start': dot[1]}">
+          </div>
+        </div>
+      </div>
+      <div *ngIf="size == 19">
+        <div *ngFor="let dot of dotPosition[2]" class="dotContainer">
+          <div class="dot" [ngStyle]="{'grid-row-start': dot[0], 'grid-column-start': dot[1]}">
+          </div>
         </div>
       </div>
 
 
+
     </div>
-    <div class="whiteBorder">
+    <div class="whiteBorder{{size}}">
     </div>
   </div>
