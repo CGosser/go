@@ -15,7 +15,9 @@ export class AppComponent {
     //
     // }
     // service.playerLookup(gameInfo[1])
+
     this.gameOn = true;
+
   }
 
 }
