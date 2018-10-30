@@ -11,18 +11,26 @@ export class Game {
   lastTurnPass: boolean;
   whiteCaptures: number; // whiteCaptures = the number of black stones the white player has captured
   blackCaptures: number; // blackCaptures = ths number of white stones the black player has captured
+  whiteScore: number;
+  blackScore: number;
+  winner: Player;
+  margin: number;
+  ko: number[];
 
   constructor(public dim: number, public white: Player, public black: Player) {
     this.dimension = dim;
     this.whitePlayer = white;
     this.blackPlayer = black;
-    this.gameState = createNewGameState(dim);
+    this.gameState = this.createNewGameState(dim);
     this.activeGame = true;
     this.activePlayer = "black";
     this.passivePlayer = "white";
     this.lastTurnPass = false;
     this.whiteCaptures = 0;
     this.blackCaptures = 0;
+    this.whiteScore = 0;
+    this.blackScore = 0;
+    this.ko = [-1,-1];
   }
 
   createNewGameState(N: number) {
@@ -37,11 +45,11 @@ export class Game {
     return out;
   }
 
-  checkPoint(public point: number[]) {  // point: number is an element of list {9, 13, 19}
+  checkPoint(point: number[]) {  // point: number is an element of list {9, 13, 19}
     return this.gameState[point[0]][point[1]];
   }
 
-  checkAdjacencies(public point: number[]) { // given a single point, returns a list of points in the gameState adjacent to that point
+  checkAdjacencies(point: number[]) { // given a single point, returns a list of points in the gameState adjacent to that point
     const points: any[] = [];
     const i: number = point[0];
     const j: number = point[1];
@@ -60,7 +68,7 @@ export class Game {
     return points;
   }
 
-  buildGroup(public point: number[]) {
+  buildGroup(point: number[]) {
     // initialization
     const queue = [point];
     const group = [point];
@@ -73,7 +81,7 @@ export class Game {
     // search
     while (queue.length > 0) {
       const next = queue.shift();
-      const neighbors = checkAdjacencies(next);
+      const neighbors = this.checkAdjacencies(next);
       neighbors.forEach(neighbor => {
         // check if neighbor has been searched. If yes, skip it.
         let skip = false;
@@ -100,32 +108,45 @@ export class Game {
     }; // list of points in the group
   }
 
-  killGroup(public point: number[]) { // Set all stones in the same group as the given stone to null in this.gameState
-    const groupToKill = buildGroup(point);
+  killGroup(point: number[]) { // Set all stones in the same group as the given stone to null in this.gameState
+    const groupToKill = this.buildGroup(point);
     groupToKill.group.forEach(neighbor => {
       this.gameState[neighbor[0]][neighbor[1]] = null;
     })
   }
 
-  placeStone(public stone: number[]) {
-    const neighbors = this.checkAdjacencies(stone);
-    neighbors.forEach(neighbor => {
-      if (this.activePlayer == this.gameState[stone[0]][stone[1]]) { // if opponent has a stone in position neighbor, check for captures from newly placed stone
-        const group = this.buildGroup(neighbor); // get neighbor's entire group
-        if (group.liberties.length == 0) { // if neighbor group no longer has any liberties, kill it
-          const captures = group.liberties.length;
-          if (this.activePlayer == "white") {this.whiteCaptures += captures;}
-          else {this.blackCaptures += captures;}
-          this.killGroup(neighbor);
+  placeStone(stone: number[]) {
+    if (this.ko[0] == stone[0] && this.ko[1] == stone[1]) {
+      this.illegalMove(stone);
+    }
+    else {
+      if (this.activePlayer == "white") {this.gameState[stone[0]][stone[1]] = "white";}
+      else {this.gameState[stone[0]][stone[1]] = "black";}
+      let killed: number[];
+      const neighbors = this.checkAdjacencies(stone);
+      neighbors.forEach(neighbor => {
+        if (this.activePlayer == this.gameState[stone[0]][stone[1]]) { // if opponent has a stone in position neighbor, check for captures from newly placed stone
+          const group = this.buildGroup(neighbor); // get neighbor's entire group
+          if (group.liberties.length == 0) { // if neighbor group no longer has any liberties, kill it
+            const captures = group.group.length;
+            if (captures == 1) {killed = group.group[0];}
+            else {killed = [-1,-1];}
+            if (this.activePlayer == "white") {this.whiteCaptures += captures;}
+            else {this.blackCaptures += captures;}
+            this.killGroup(neighbor);
+          }
         }
+      })
+      const group = this.buildGroup(stone);
+      if (group.liberties.length == 0) {this.illegalMove(stone);}
+      else {
+        this.ko = killed;
+        this.nextTurn();
       }
-    })
-    const group = this.buildGroup(stone);
-    if (group.liberties == 0) {this.illegalMove();}
-    else {this.nextTurn();}
+    }
   }
 
-  illegalMove(public point: number[]) { // Set a single stone to null in this.gameState
+  illegalMove(point: number[]) { // Set a single stone to null in this.gameState
     this.gameState[point[0]][point[1]] = null;
   }
 
@@ -139,16 +160,81 @@ export class Game {
       this.lastTurnPass = true;
     }
     else {
-      this.endGame();
+      this.resolveScore();
     }
   }
 
-  endGame() {
+  resign() {
+    if (this.passivePlayer == "white") {this.winner = this.whitePlayer;}
+    else {this.winner = this.blackPlayer;}
+    this.margin = 0;
     this.activeGame = false;
   }
 
-  resign() {
-    this.endGame();
+  resolveScore() {
+    let territories = [];
+    for (let i = 0; i < this.dimension; i++) {
+      for (let j = 0; j < this.dimension; j++) {
+        if (this.gameState[i][j] == null) {
+          territories.push([i,j]);
+        }
+      }
+    }
+    while (territories.length > 0) {
+      const p = territories.shift();
+      const queue = [p];
+      const group = [p];
+      const visited = [];
+      while (queue.length > 0) {
+        const next = queue.shift();
+        territories.forEach(point => {
+          if (point[0] == next[0] && point[1] == next[1]) {
+            territories.splice(territories.indexOf(point),1);
+          }
+        })
+        let neighbors = this.checkAdjacencies(next);
+        neighbors.forEach(neighbor => {
+          let skip = false;
+          visited.forEach(visitedPoint => {
+            if (neighbor[0] === visitedPoint[0] && neighbor[1] === visitedPoint[1]) { skip = true; }
+          })
+          if (skip == false) {
+            if (this.gameState[neighbor[0]][neighbor[1]] == null) {
+              group.push(neighbor);
+              queue.push(neighbor);
+            }
+          }
+          visited.push(neighbor);
+        })
+        let border: boolean[] = [false, false];
+        group.forEach(emptyPt => {
+          let neighbors = this.checkAdjacencies(emptyPt);
+          neighbors.forEach(neighbor => {
+            if (this.gameState[neighbor[0]][neighbor[1]] == "white") {
+              border[0] = true;
+            } else if (this.gameState[neighbor[0]][neighbor[1]] == "black") {
+              border[1] = true;
+            }
+          })
+        })
+        if (border[0] == true && border[1] == false) {
+          this.whiteScore += group.length;
+        }
+        else if (border[0] == false && border[1] == true) {
+          this.blackScore += group.length;
+        }
+      }
+    }
+    this.whiteScore += this.whiteCaptures;
+    this.blackScore += this.blackCaptures;
+    if (this.whiteScore - this.blackScore > 0) {
+      this.winner = this.whitePlayer;
+      this.margin = this.whiteScore - this.blackScore;
+      this.activeGame = false;
+    } else if (this.blackScore - this.whiteScore > 0) {
+      this.winner = this.blackPlayer;
+      this.margin = this.blackScore - this.whiteScore;
+      this.activeGame = false;
+    }
   }
-
 }
