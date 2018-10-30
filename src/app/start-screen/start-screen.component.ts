@@ -14,8 +14,18 @@ export class StartScreenComponent implements OnInit {
 
   @Output() clickSender = new EventEmitter();
 
-  startGame(gameOn){
-    this.clickSender.emit(gameOn);
-  }
+  gameInfo: any[];
+  selectedSize: number;
 
+  onSelectionChange(entry) {
+          this.selectedSize = entry;
+      }
+
+  startGame(gameInfo){
+    if (!gameInfo[2]){
+      alert("Please select a size")
+    } else {
+      this.clickSender.emit(gameInfo);
+    }
+  }
 }

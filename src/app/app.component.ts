@@ -10,7 +10,11 @@ export class AppComponent {
   gameOn: boolean = false;
 
 
-  startGame(gameOn){
+  startGame(gameInfo){
+    if (service.playerLookup(gameInfo[0])) {
+      
+    }
+    service.playerLookup(gameInfo[1])
     this.gameOn = true;
   }
 
