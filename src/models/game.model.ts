@@ -16,6 +16,8 @@ export class Game {
   winner: Player;
   margin: number;
   ko: number[];
+  komi: number;
+  gameCreated: Date;
 
   constructor(public dim: number, public white: Player, public black: Player) {
     this.dimension = dim;
@@ -31,6 +33,7 @@ export class Game {
     this.whiteScore = 0;
     this.blackScore = 0;
     this.ko = [-1,-1];
+    this.komi = this.decideKomi();
   }
 
   createNewGameState(N: number) {
@@ -43,6 +46,10 @@ export class Game {
       out.push(row);
     }
     return out;
+  }
+
+  decideKomi() {
+    return 6.5;
   }
 
   checkPoint(point: number[]) {  // point: number is an element of list {9, 13, 19}
