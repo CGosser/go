@@ -122,7 +122,7 @@ export class Game {
     else {
       if (this.activePlayer == "white") {this.gameState[stone[0]][stone[1]] = "white";}
       else {this.gameState[stone[0]][stone[1]] = "black";}
-      let killed: number[];
+      let killed: number[] = [-1,-1,];
       const neighbors = this.checkAdjacencies(stone);
       neighbors.forEach(neighbor => {
         if (this.activePlayer == this.gameState[stone[0]][stone[1]]) { // if opponent has a stone in position neighbor, check for captures from newly placed stone
@@ -130,7 +130,6 @@ export class Game {
           if (group.liberties.length == 0) { // if neighbor group no longer has any liberties, kill it
             const captures = group.group.length;
             if (captures == 1) {killed = group.group[0];}
-            else {killed = [-1,-1];}
             if (this.activePlayer == "white") {this.whiteCaptures += captures;}
             else {this.blackCaptures += captures;}
             this.killGroup(neighbor);

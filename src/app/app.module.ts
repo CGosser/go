@@ -3,11 +3,13 @@ import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
 import { BoardUIComponent } from './board-ui/board-ui.component';
+import { StartScreenComponent } from './start-screen/start-screen.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    BoardUIComponent
+    BoardUIComponent,
+    StartScreenComponent
   ],
   imports: [
     BrowserModule

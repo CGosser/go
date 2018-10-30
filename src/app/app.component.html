@@ -1,1 +1,5 @@
-<app-board-ui></app-board-ui>
+
+
+<app-start-screen *ngIf="gameOn == false" (clickSender)="startGame($event)"></app-start-screen>
+
+<app-board-ui *ngIf="gameOn"></app-board-ui>
