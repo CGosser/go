@@ -1,3 +1,7 @@
 export class Player {
-  name: string;
+
+  constructor (public name: string){
+    this.name = name;
+  };
+
 }

@@ -22,25 +22,46 @@
 
         </span>
       </div>
-      <div *ngFor="let arrayAtX of gameState; let i = index">
-        <div *ngFor="let pieceAtY of gameState[i], let j = index">
-          <div *ngIf="pieceAtY" [ngStyle]="{'grid-row-start': (i + 1), 'grid-column-start': (j + 1)}" class="piece">
-            <div *ngIf="pieceAtY == 'white'" class="stone">
+      <div *ngFor="let arrayAtX of testGame.gameState; let i = index">
+        <div *ngFor="let pieceAtY of testGame.gameState[i], let j = index">
+            <div *ngIf="pieceAtY == 'white'" [ngStyle]="{'grid-row-start': (i + 1), 'grid-column-start': (j + 1)}" class="stone piece">
               <img src="../assets/whiteStone.png" alt="">
             </div>
-            <div *ngIf="pieceAtY == 'black'" class="stone">
+            <div *ngIf="pieceAtY == 'black'" [ngStyle]="{'grid-row-start': (i + 1), 'grid-column-start': (j + 1)}" class="stone piece">
               <img src="../assets/blackStone.png" alt="">
             </div>
+            <div *ngIf="pieceAtY == null" [ngStyle]="{'grid-row-start': (i + 1), 'grid-column-start': (j + 1)}" class="empty" (click)="placeStone([i,j])">
+              <div *ngIf="testGame.activePlayer == 'black'">
+                <img src="../assets/blackStone.png" alt="">
+              </div>
+              <div *ngIf="testGame.activePlayer == 'white'">
+                <img src="../assets/whiteStone.png" alt="">
+              </div>
+            </div>
+        </div>
+      </div>
+      <div *ngIf="size == 9">
+        <div *ngFor="let dot of dotPosition[0]" class="dotContainer">
+          <div class="dot" [ngStyle]="{'grid-row-start': dot[0], 'grid-column-start': dot[1]}">
           </div>
         </div>
       </div>
-      <div *ngFor="let dot of dotPosition" class="dotContainer">
-        <div class="dot" [ngStyle]="{'grid-row-start': dot[0], 'grid-column-start': dot[1]}">
+      <div *ngIf="size == 13">
+        <div *ngFor="let dot of dotPosition[1]" class="dotContainer">
+          <div class="dot" [ngStyle]="{'grid-row-start': dot[0], 'grid-column-start': dot[1]}">
+          </div>
+        </div>
+      </div>
+      <div *ngIf="size == 19">
+        <div *ngFor="let dot of dotPosition[2]" class="dotContainer">
+          <div class="dot" [ngStyle]="{'grid-row-start': dot[0], 'grid-column-start': dot[1]}">
+          </div>
         </div>
       </div>
 
 
+
     </div>
-    <div class="whiteBorder">
+    <div class="whiteBorder{{size}}">
     </div>
   </div>
