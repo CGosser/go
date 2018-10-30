@@ -1,14 +1,14 @@
-export gameStates = {
-  var board1 = [
-    [null,    "black", "white",  null,   null, null, null, null, null],
-    ["black", "black", "white", "black", null, null, null, null, null],
-    ["white", "white", "white", "black", null, null, null, null, null],
-    [null,    null,    "white", "white", null, null, null, null, null],
-    [null,    null,    null,    null,    null, null, null, null, null],
-    [null,    null,    null,    null,    null, null, null, null, null],
-    [null,    null,    null,    null,    null, null, null, null, null],
-    [null,    null,    null,    null,    "white", "black", null, null, null],
-    [null,    null,    null,    null,    "white", null, null, null, null]
-  ]
+import { Game } from '../models/game.model'
+import { Player } from './player.model';
+
+export class gameStates {
+
+  constructor(){};
+
+  whitePlayer: Player = new Player("white");
+  blackPlayer: Player = new Player("black");
+  testGame: Game = new Game(9, this.whitePlayer, this.blackPlayer);
+
+  // this.testGame.placeStone([4,4]);
 
 }

@@ -16,7 +16,7 @@ export class Game {
     this.dimension = dim;
     this.whitePlayer = white;
     this.blackPlayer = black;
-    this.gameState = createNewGameState(dim);
+    this.gameState = this.createNewGameState(dim);
     this.activeGame = true;
     this.activePlayer = "black";
     this.passivePlayer = "white";
@@ -37,11 +37,11 @@ export class Game {
     return out;
   }
 
-  checkPoint(public point: number[]) {  // point: number is an element of list {9, 13, 19}
+  checkPoint( point: number[]) {  // point: number is an element of list {9, 13, 19}
     return this.gameState[point[0]][point[1]];
   }
 
-  checkAdjacencies(public point: number[]) { // given a single point, returns a list of points in the gameState adjacent to that point
+  checkAdjacencies(point: number[]) { // given a single point, returns a list of points in the gameState adjacent to that point
     const points: any[] = [];
     const i: number = point[0];
     const j: number = point[1];
@@ -60,7 +60,7 @@ export class Game {
     return points;
   }
 
-  buildGroup(public point: number[]) {
+  buildGroup(point: number[]) {
     // initialization
     const queue = [point];
     const group = [point];
@@ -73,7 +73,7 @@ export class Game {
     // search
     while (queue.length > 0) {
       const next = queue.shift();
-      const neighbors = checkAdjacencies(next);
+      const neighbors = this.checkAdjacencies(next);
       neighbors.forEach(neighbor => {
         // check if neighbor has been searched. If yes, skip it.
         let skip = false;
@@ -100,14 +100,16 @@ export class Game {
     }; // list of points in the group
   }
 
-  killGroup(public point: number[]) { // Set all stones in the same group as the given stone to null in this.gameState
-    const groupToKill = buildGroup(point);
+  killGroup(point: number[]) { // Set all stones in the same group as the given stone to null in this.gameState
+    const groupToKill = this.buildGroup(point);
     groupToKill.group.forEach(neighbor => {
       this.gameState[neighbor[0]][neighbor[1]] = null;
     })
   }
 
-  placeStone(public stone: number[]) {
+  placeStone(stone: number[]) {
+    if (this.activePlayer == "white") {this.gameState[stone[0]][stone[1]] = "white";}
+    else {this.gameState[stone[0]][stone[1]] = "black";}
     const neighbors = this.checkAdjacencies(stone);
     neighbors.forEach(neighbor => {
       if (this.activePlayer == this.gameState[stone[0]][stone[1]]) { // if opponent has a stone in position neighbor, check for captures from newly placed stone
@@ -121,11 +123,11 @@ export class Game {
       }
     })
     const group = this.buildGroup(stone);
-    if (group.liberties == 0) {this.illegalMove();}
+    if (group.liberties.length == 0) {this.illegalMove(stone);}
     else {this.nextTurn();}
   }
 
-  illegalMove(public point: number[]) { // Set a single stone to null in this.gameState
+  illegalMove(point: number[]) { // Set a single stone to null in this.gameState
     this.gameState[point[0]][point[1]] = null;
   }
 
