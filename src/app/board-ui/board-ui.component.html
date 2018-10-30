@@ -1,5 +1,5 @@
 
-  <div class="boardColor{{size}}">
+  <div class="boardColor{{size}} fadeIn">
     <div class="boardGrid" [ngStyle]="{'grid-template': 'repeat(' + size + ', 40px)/ repeat(' + size + ',40px)'}">
       <div *ngFor="let row of rows">
         <div *ngFor="let column of columns" class="vertex">

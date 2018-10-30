@@ -7,6 +7,22 @@
       user-select: none;
 }
 
+.fadeIn {
+  opacity: 0;
+  animation: fadeIn 3s 1;
+  animation-delay: 3s;
+  animation-fill-mode: forwards;
+}
+
+
+
+@keyframes fadeIn {
+
+  100% {
+    opacity: 1;
+  }
+}
+
 .boardGrid {
   display: grid;
   height: 40px;

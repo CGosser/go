@@ -16,12 +16,18 @@ export class StartScreenComponent implements OnInit {
 
   gameInfo: any[];
   selectedSize: number;
+  fade: string = "";
 
   onSelectionChange(entry) {
-          this.selectedSize = entry;
-      }
+    this.selectedSize = entry;
+  }
+
+  addFade(){
+    this.fade = "fadeOut";
+  }
 
   startGame(gameInfo){
+    this.addFade();
     if (!gameInfo[2]){
       alert("Please select a size")
     } else {
