@@ -147,6 +147,7 @@ export class Game {
       if (group.liberties.length == 0) {this.illegalMove(stone);}
       else {
         this.ko = killed;
+        console.log(this.gameState);
         this.nextTurn();
       }
     }
@@ -224,9 +225,11 @@ export class Game {
           })
         })
         if (border[0] == true && border[1] == false) {
+          console.log("Group found for white: ", group.group);
           this.whiteScore += group.length;
         }
         else if (border[0] == false && border[1] == true) {
+          console.log("Group found for black: ", group.group);
           this.blackScore += group.length;
         }
       }
