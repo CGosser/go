@@ -1,0 +1,29 @@
+
+
+app-board-ui {
+  position: absolute;
+  top: 50px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.players{
+  display:flex;
+  justify-content: space-between;
+}
+
+.rootContainer {
+  padding: 40px;
+  margin: auto;
+  max-width: 1200px;
+  min-width: 1200px;
+}
+
+@media only screen and (max-width: 1400px) {
+  .players{
+    display:flex;
+    justify-content: space-between;
+    margin-top: 850px;
+    max-width: 750px;
+  }
+}

@@ -1,0 +1,22 @@
+* {
+    font-family: 'Montserrat', sans-serif;
+}
+
+.player {
+  display: flex;
+  align-items: center;
+  font-size: 1.5rem;
+}
+
+.captured span{
+  font-size: 26px;
+}
+.captured {
+  font-size: 20px;
+  margin-left: 45px;
+}
+
+.captured img {
+  width: 16px;
+  height: 16px;
+}
