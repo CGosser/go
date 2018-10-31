@@ -225,11 +225,11 @@ export class Game {
           })
         })
         if (border[0] == true && border[1] == false) {
-          console.log("Group found for white: ", group.group);
+          console.log("Group found for white: ", group);
           this.whiteScore += group.length;
         }
         else if (border[0] == false && border[1] == true) {
-          console.log("Group found for black: ", group.group);
+          console.log("Group found for black: ", group);
           this.blackScore += group.length;
         }
       }
