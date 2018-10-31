@@ -25,6 +25,19 @@ export class GameService {
     this.allGames.push(game);
   }
 
+  getGameKey() {
+    let out;
+    this.allGames.subscribe(response => {
+      response.sort((a,b) => {
+        return b.$key-a.$key;
+      })
+      out = response[response.length-1].$key;
+      console.log(out);
+      return out;
+    });
+    // this.allGames.limitToLast(1);
+  }
+
   playerLookup(name: string) {
     return this.database.object('players/' + name);
   }

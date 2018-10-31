@@ -1,4 +1,4 @@
-game.gameState = [
+[
   ["white",null,"white","white","white","black",null,"black","white"],
   [null,"white","white","white","black","black",null,"black","white"],
   ["white","white","black","black","black","black","black","black","white"],

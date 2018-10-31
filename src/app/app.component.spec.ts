@@ -2,6 +2,7 @@ import { TestBed, async } from '@angular/core/testing';
 import { AppComponent } from './app.component';
 import { BoardUIComponent } from './board-ui/board-ui.component';
 import { StartScreenComponent } from './start-screen/start-screen.component';
+import { PlayerUiComponent } from './player-ui/player-ui.component';
 import { Game } from '../models/game.model';
 import { Player } from '../models/player.model';
 
@@ -11,7 +12,8 @@ describe('AppComponent', () => {
       declarations: [
         AppComponent,
         BoardUIComponent,
-        StartScreenComponent
+        StartScreenComponent,
+        PlayerUiComponent
       ],
     }).compileComponents();
 
@@ -58,6 +60,6 @@ describe('AppComponent', () => {
     console.log("White score: " + game.whiteScore);
     console.log("Winner: " + game.winner);
     console.log("Margin of victory: " + game.margin);
-    expect(game.winner).toEqual("Joe, the best Go master in the world.");
+    expect(game.winner).toEqual(player1);
   });
 });
