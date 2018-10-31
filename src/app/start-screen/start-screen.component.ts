@@ -22,6 +22,12 @@ export class StartScreenComponent implements OnInit {
   gameInfo: any[];
   selectedSize: number;
   fade: string = "";
+  sizeChosen: boolean = false;
+  sizeAlert: boolean = false;
+
+  setBoardSize(){
+    this.sizeChosen = true;
+  }
 
   onSelectionChange(entry) {
     this.selectedSize = entry;
@@ -33,7 +39,7 @@ export class StartScreenComponent implements OnInit {
 
   startGame(gameInfo){
     if (!gameInfo[2]){
-      alert("Please select a size")
+      this.sizeAlert = true;
     } else {
       this.addFade();
       const coinFlip = Math.floor(Math.random() * 2);
