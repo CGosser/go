@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Game } from '../../models/game.model';
 import { Player } from '../../models/player.model';
+import { GameService } from '../game.service';
 
 @Component({
   selector: 'app-board-ui',
@@ -19,15 +20,45 @@ export class BoardUIComponent implements OnInit {
   directionToggle: string = "normal";
   animationReset: string = "colorChangeBlack";
   fillToggle: string = "forwards";
+  playerBefore: string;
+  playerAfter: string;
 
 
-  constructor() { }
+  constructor(private gameService: GameService) { }
 
   ngOnInit() {
   }
 
   placeStone(stone: number[]){
+    // this.gameService.getCurrentGame().subscribe(currentGame => {
+    //   this.playerBefore = currentGame.activePlayer
+    // })
     this.testGame.placeStone([stone[0], stone[1]]);
+    // this.gameService.getCurrentGame().subscribe(currentGame => {
+    //   this.playerAfter = currentGame.activePlayer
+    //   if (this.directionToggle == "normal"){
+    //     this.directionToggle = "reverse";
+    //     this.animationReset = "colorChangeWhite";
+    //     this.fillToggle = "backwards";
+    //   } else {
+    //     this.directionToggle = "normal";
+    //     this.animationReset = "colorChangeBlack";
+    //     this.fillToggle = "forwards";
+    //   }
+    // })
+    if (this.directionToggle == "normal"){
+      this.directionToggle = "reverse";
+      this.animationReset = "colorChangeWhite";
+      this.fillToggle = "backwards";
+    } else {
+      this.directionToggle = "normal";
+      this.animationReset = "colorChangeBlack";
+      this.fillToggle = "forwards";
+    }
+
+  }
+  pass(){
+    this.testGame.pass();
     if (this.directionToggle == "normal"){
       this.directionToggle = "reverse";
       this.animationReset = "colorChangeWhite";

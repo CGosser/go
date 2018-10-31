@@ -8,7 +8,7 @@
       <input type="text" name="" #name1 placeholder="Player 1 Name">
       <input type="text" name="" #name2 placeholder="Player 2 Name">
     </div>
-    <div class="boardDiv">
+    <div class="boardDiv" (click)="setBoardSize()">
       <input type="radio" id="boardSize1" name="boardSize" value="9" (change)="onSelectionChange(9)"><label for="boardSize1">9 x 9</label>
       <input type="radio" id="boardSize2" name="boardSize" value="13" (change)="onSelectionChange(13)">    <label for="boardSize2">13 x 13</label>
       <input type="radio" id="boardSize3" name="boardSize" value="19" (change)="onSelectionChange(19)">  <label for="boardSize3">19 x 19</label>
@@ -16,6 +16,9 @@
     <div class="buttonDiv">
       <button type="button" name="button" (click)="startGame([name1.value, name2.value, selectedSize])">Start</button>
     </div>
+  </div>
+  <div class="sizeWarning" *ngIf="sizeAlert">
+    Please select a board size.
   </div>
 </div>
 

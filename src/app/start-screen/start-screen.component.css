@@ -104,3 +104,10 @@ h1 {
     opacity: 0;
   }
 }
+
+.sizeWarning {
+  position: absolute;
+  z-index: 5;
+  top: 350px;
+  font-size: 14px;
+}
