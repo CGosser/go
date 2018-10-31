@@ -31,10 +31,10 @@ export class StartScreenComponent implements OnInit {
   }
 
   startGame(gameInfo){
-    this.addFade();
     if (!gameInfo[2]){
       alert("Please select a size")
     } else {
+      this.addFade();
       const coinFlip = Math.floor(Math.random() * 2);
       let player1;
       let player2;

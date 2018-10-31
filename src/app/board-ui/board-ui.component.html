@@ -64,3 +64,17 @@
     <div class="whiteBorder{{size}}">
     </div>
   </div>
+  <div class="playerInfo">
+    <app-player-ui [player]="'white'"></app-player-ui>
+    <div class="passContainer">
+      <div class="passButtonWhiteContainer" [ngStyle]="{'animation': colorChange + ' 2s', 'animation-fill-mode': 'forwards'}">
+        <div class="passButtonWhite">
+          <p>Pass</p>
+        </div>
+      </div>
+      <div class="passButtonBlack">
+        <p>Pass</p>
+      </div>
+    </div>
+    <app-player-ui [player]="'black'"></app-player-ui>
+  </div>
