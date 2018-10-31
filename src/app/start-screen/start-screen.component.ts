@@ -2,6 +2,7 @@ import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
 import { Player } from '../../models/player.model';
 import { Game } from '../../models/game.model';
 import { GameService } from '../game.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-start-screen',
@@ -11,7 +12,7 @@ import { GameService } from '../game.service';
 })
 export class StartScreenComponent implements OnInit {
 
-  constructor(private gameService: GameService) { }
+  constructor(private gameService: GameService, private router: Router) { }
 
   ngOnInit() {
   }
@@ -53,7 +54,13 @@ export class StartScreenComponent implements OnInit {
       }
       const game = new Game(gameInfo[2], player1, player2);
       this.gameService.addGame(game);
-      let gameKey = this.gameService.getGameKey();
+      this.gameService.allGames.subscribe(response => {
+        response.sort((a,b) => {
+          return b.$key-a.$key;
+        });
+        const gameKey = response[response.length-1].$key;
+        this.router.navigate(['game', gameKey]);
+      });
     }
   }
 }
