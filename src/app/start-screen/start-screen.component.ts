@@ -48,8 +48,13 @@ export class StartScreenComponent implements OnInit {
       }
       const game = new Game(gameInfo[2], player1, player2);
       this.gameService.addGame(game);
-      const gameKey = this.gameService.getGameKey()
-      // this.router.navigate(['game', gameKey])
+      this.gameService.allGames.subscribe(response => {
+        response.sort((a,b) => {
+          return b.$key-a.$key;
+        });
+        const gameKey = response[response.length-1].$key;
+        this.router.navigate(['game', gameKey]);
+      });
     }
   }
 }
