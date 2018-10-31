@@ -66,8 +66,8 @@
   </div>
   <div class="playerInfo">
     <app-player-ui [player]="'white'"></app-player-ui>
-    <div class="passContainer">
-      <div class="passButtonWhiteContainer" [ngStyle]="{'animation': animationReset + ' 2s ease-in-out', 'animation-direction': directionToggle, 'animation-fill-mode': fillToggle}" (click)="pass()">
+    <div class="passContainer" (click)="pass()">
+      <div class="passButtonWhiteContainer" [ngStyle]="{'animation': animationReset + ' 2s ease-in-out', 'animation-direction': directionToggle, 'animation-fill-mode': fillToggle}" >
         <div class="passButtonWhite">
           <p>Pass</p>
         </div>
