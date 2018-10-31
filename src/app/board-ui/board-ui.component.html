@@ -67,7 +67,7 @@
   <div class="playerInfo">
     <app-player-ui [player]="'white'"></app-player-ui>
     <div class="passContainer">
-      <div class="passButtonWhiteContainer" [ngStyle]="{'animation': colorChange + ' 2s', 'animation-fill-mode': 'forwards'}">
+      <div class="passButtonWhiteContainer" [ngStyle]="{'animation': animationReset + ' 2s ease-in-out', 'animation-direction': directionToggle, 'animation-fill-mode': fillToggle}">
         <div class="passButtonWhite">
           <p>Pass</p>
         </div>

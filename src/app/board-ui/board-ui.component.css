@@ -149,6 +149,7 @@
   width: 64px;
   animation: colorChangeWhite;
   animation-fill-mode: forwards;
+  animation-direction: normal;
 }
 
 .passButtonBlack {
@@ -162,12 +163,13 @@
   justify-content: center;
   align-items: center;
   margin-top: 6px;
+  font-size: 1rem;
 }
 
 .passButtonWhite {
   width: 60px;
   height: 30px;
-  color: #2e2e2e;
+  color: black;
   background-color: white;
   border: 1px solid #2e2e2e;
   border-radius: 5px;
@@ -175,6 +177,7 @@
   justify-content: center;
   align-items: center;
   margin-top: 6px;
+  font-size: 1rem;
 }
 
 @keyframes colorChangeBlack{
@@ -185,12 +188,13 @@
     width: 0px;
   }
 }
+
 @keyframes colorChangeWhite{
   0% {
-    width: 0px;
+    width: 64px;
   }
   100% {
-    width: 64px;
+    width: 0px;
   }
 }
 
