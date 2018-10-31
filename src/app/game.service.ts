@@ -26,6 +26,10 @@ export class GameService {
     this.allGames.push(game);
   }
 
+  getCurrentGame(key) { // $key
+    return this.database.object('games/' + key);
+  }
+
   // getGameKey() {
   //   // let out;
   //   // this.allGames.subscribe(response => {

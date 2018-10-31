@@ -246,4 +246,12 @@ export class Game {
       this.activeGame = false;
     }
   }
+
+  translateMatrixToFB() {
+    return JSON.stringify(this.gameState);
+  }
+
+  translateFBToMatrix(input: string) {
+    return JSON.parse(input);
+  }
 }

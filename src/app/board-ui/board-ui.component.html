@@ -1,5 +1,5 @@
 
-  <div class="boardColor{{size}} fadeIn">
+  <div class="boardColor{{size}} fadeIn | async">
     <div class="boardGrid" [ngStyle]="{'grid-template': 'repeat(' + size + ', 40px)/ repeat(' + size + ',40px)'}">
       <div *ngFor="let row of rows">
         <div *ngFor="let column of columns" class="vertex">
@@ -18,11 +18,10 @@
       </div>
       <div *ngIf="size === 9">
         <span class="dot1" style="">
-
         </span>
       </div>
-      <div *ngFor="let arrayAtX of testGame.gameState; let i = index">
-        <div *ngFor="let pieceAtY of testGame.gameState[i], let j = index">
+      <div *ngFor="let arrayAtX of game.gameState; let i = index">
+        <div *ngFor="let pieceAtY of game.gameState[i], let j = index">
             <div *ngIf="pieceAtY == 'white'" [ngStyle]="{'grid-row-start': (i + 1), 'grid-column-start': (j + 1)}" class="stone piece">
               <img src="../assets/whiteStone.png" alt="">
             </div>
@@ -30,10 +29,10 @@
               <img src="../assets/blackStone.png" alt="">
             </div>
             <div *ngIf="pieceAtY == null" [ngStyle]="{'grid-row-start': (i + 1), 'grid-column-start': (j + 1)}" class="empty" (click)="placeStone([i,j])">
-              <div *ngIf="testGame.activePlayer == 'black'">
+              <div *ngIf="game.activePlayer == 'black'">
                 <img src="../assets/blackStone.png" alt="">
               </div>
-              <div *ngIf="testGame.activePlayer == 'white'">
+              <div *ngIf="game.activePlayer == 'white'">
                 <img src="../assets/whiteStone.png" alt="">
               </div>
             </div>
