@@ -15,14 +15,6 @@
 }
 
 
-
-@keyframes fadeIn {
-
-  100% {
-    opacity: 1;
-  }
-}
-
 .boardGrid {
   display: grid;
   height: 40px;
@@ -64,6 +56,18 @@
   height: 720px;
   margin: auto;
   margin-top: 40px;
+}
+
+.playerInfo{
+  display: flex;
+  width: 500px;
+  justify-content: space-between;
+  margin: 0 auto;
+  margin-top: 50px;
+  animation: fadeIn 3s 1;
+  animation-delay: 3s;
+  animation-fill-mode: forwards;
+  opacity: 0;
 }
 
 .piece {
@@ -133,4 +137,65 @@
   top: 16px;
   left: 16px;
   z-index: 1;
+}
+
+.passContainer {
+  position: relative;
+}
+
+.passButtonWhiteContainer {
+  position: absolute;
+  overflow: hidden;
+  width: 64px;
+  animation: colorChangeWhite;
+  animation-fill-mode: forwards;
+}
+
+.passButtonBlack {
+  width: 60px;
+  height: 30px;
+  color: white;
+  background-color: #2e2e2e;
+  border: 1px solid black;
+  border-radius: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 6px;
+}
+
+.passButtonWhite {
+  width: 60px;
+  height: 30px;
+  color: #2e2e2e;
+  background-color: white;
+  border: 1px solid #2e2e2e;
+  border-radius: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 6px;
+}
+
+@keyframes colorChangeBlack{
+  0% {
+    width: 64px;
+  }
+  100% {
+    width: 0px;
+  }
+}
+@keyframes colorChangeWhite{
+  0% {
+    width: 0px;
+  }
+  100% {
+    width: 64px;
+  }
+}
+
+@keyframes fadeIn {
+  100% {
+    opacity: 1;
+  }
 }

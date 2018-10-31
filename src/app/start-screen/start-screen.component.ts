@@ -27,10 +27,10 @@ export class StartScreenComponent implements OnInit {
   }
 
   startGame(gameInfo){
-    this.addFade();
     if (!gameInfo[2]){
       alert("Please select a size")
     } else {
+      this.addFade();
       this.clickSender.emit(gameInfo);
     }
   }

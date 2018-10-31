@@ -1,18 +1,6 @@
-<!--
 
-<div class="rootContainer">
-    
-  <!--
-  <app-start-screen (clickSender)="startGame($event)"></app-start-screen> -->
+  <app-start-screen (clickSender)="startGame($event)"></app-start-screen>
 
 
-  <app-board-ui></app-board-ui>
-   <!-- *ngIf="gameOn" -->
 
-  <div class="players">
-    <app-player-ui [player]="'white'"></app-player-ui>
-    <app-player-ui [player]="'black'"></app-player-ui>
-  </div>
-
-</div>
-
+  <app-board-ui *ngIf="gameOn"></app-board-ui>
