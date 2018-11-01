@@ -1,6 +1,26 @@
-<div class="player">
-  <img src="./assets/{{player}}Stone.png" alt="">Player Name
+<div *ngIf="player1?.name">
+  <div *ngIf="player == 'white'">
+    <div *ngIf="!player1.name"  class="player">
+      <img src="./assets/{{player}}Stone.png" alt="" > &nbsp;White Player
+    </div>
+    <div *ngIf="player1.name"  class="player">
+      <img src="./assets/{{player}}Stone.png" alt=""> &nbsp;{{player1.name}}
+    </div>
+  </div>
+  <div *ngIf="player == 'black'">
+    <div *ngIf="!player2.name"  class="player">
+       &nbsp;Black Player <img src="./assets/{{player}}Stone.png" alt="" >
+    </div>
+    <div *ngIf="player2.name"  class="player">
+       {{player2.name}}&nbsp;<img src="./assets/{{player}}Stone.png" alt="">
+    </div>
+  </div>
 </div>
-<div class="captured">
-  <img src="./assets/{{otherPlayer(player)}}Stone.png" alt=""> <span></span> 0
+<div class="captured" *ngIf="player1?.name">
+  <div *ngIf="player == 'white'">
+    <img src="./assets/{{otherPlayer(player)}}Stone.png" alt=""> <span></span> {{whiteStoneCount}}
+  </div>
+  <div *ngIf="player == 'black'">
+    <img src="./assets/{{otherPlayer(player)}}Stone.png" alt=""> <span></span> {{blackStoneCount}}
+  </div>
 </div>

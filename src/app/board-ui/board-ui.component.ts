@@ -36,7 +36,6 @@ export class BoardUIComponent implements OnInit {
       const player1 = new Player(response.whitePlayer);
       const player2 = new Player(response.blackPlayer);
       this.game = new Game(response.dimension, player1, player2);
-      console.log(this.game);
       this.size = this.game.dimension;
       this.rows = Array(this.size);
       this.columns = Array(this.size);
@@ -46,14 +45,12 @@ export class BoardUIComponent implements OnInit {
       this.game.blackCaptures = response.blackCaptures;
       this.game.whiteCaptures = response.whiteCaptures;
       this.game.ko = response.ko;
+      this.playerChange();
     });
   }
 
-  placeStone(stone: number[]) {
-    this.playerBefore = this.game.activePlayer;
-    this.game.placeStone([stone[0], stone[1]]);
-    this.playerAfter = this.game.activePlayer;
-    if(this.playerBefore !== this.playerAfter) {
+  playerChange(){
+    console.log("true");
     if (this.directionToggle == "normal"){
         this.directionToggle = "reverse";
         this.animationReset = "colorChangeWhite";
@@ -63,8 +60,23 @@ export class BoardUIComponent implements OnInit {
         this.animationReset = "colorChangeBlack";
         this.fillToggle = "forwards";
       }
+  }
+
+  placeStone(stone: number[]) {
+    this.playerBefore = this.game.activePlayer;
+    this.game.placeStone([stone[0], stone[1]]);
+    this.playerAfter = this.game.activePlayer;
+    if(this.playerBefore !== this.playerAfter) {
+      // if (this.directionToggle == "normal"){
+      //     this.directionToggle = "reverse";
+      //     this.animationReset = "colorChangeWhite";
+      //     this.fillToggle = "backwards";
+      //   } else {
+      //     this.directionToggle = "normal";
+      //     this.animationReset = "colorChangeBlack";
+      //     this.fillToggle = "forwards";
+      //   }
       const testObj = this.game.translateMatrixToFB();
-      console.log(testObj);
       const gameStateInFirebase = this.gameService.getCurrentGame(this.key);
       gameStateInFirebase.update({
         activePlayer: this.game.activePlayer,
@@ -98,7 +110,9 @@ export class BoardUIComponent implements OnInit {
       this.animationReset = "colorChangeBlack";
       this.fillToggle = "forwards";
     }
-
   }
 
+  resign(){
+    this.game.resign();
+  }
 }

@@ -49,8 +49,16 @@ export class StartScreenComponent implements OnInit {
         player1 = new Player(gameInfo[0]);
         player2 = new Player(gameInfo[1]);
       } else {
-        player1 = new Player(gameInfo[1]);
-        player2 = new Player(gameInfo[0]);
+        if (!gameInfo[1]){
+          player1 = new Player("Player 1");
+        } else {
+          player1 = new Player(gameInfo[1]);
+        }
+        if (!gameInfo[0]){
+          player2 = new Player("Player 2");
+        } else {
+          player2 = new Player(gameInfo[0]);
+        }
       }
       const game = new Game(gameInfo[2], player1, player2);
       this.gameService.addGame(game);

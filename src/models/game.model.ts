@@ -80,7 +80,7 @@ export class Game {
     const queue = [point];
     const group = [point];
     const liberties: any[] = [];
-    const visited: any[] = [];
+    const visited: any[] = [point];
     const i = point[0];
     const j = point[1];
     const color = this.gameState[i][j];
@@ -257,6 +257,10 @@ export class Game {
   }
 
   translateFBToMatrix(input: string) {
-    return JSON.parse(input);
+    if (input){
+      return JSON.parse(input);
+    } else {
+      return this.createNewGameState(this.dimension);
+    }
   }
 }

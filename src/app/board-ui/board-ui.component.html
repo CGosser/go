@@ -20,7 +20,7 @@
         <span class="dot1" style="">
         </span>
       </div>
-      <div *ngFor="let arrayAtX of game.gameState; let i = index">
+      <div *ngFor="let arrayAtX of game?.gameState; let i = index">
         <div *ngFor="let pieceAtY of game.gameState[i], let j = index">
             <div *ngIf="pieceAtY == 'white'" [ngStyle]="{'grid-row-start': (i + 1), 'grid-column-start': (j + 1)}" class="stone piece">
               <img src="../assets/whiteStone.png" alt="">
@@ -64,7 +64,7 @@
     </div>
   </div>
   <div class="playerInfo">
-    <app-player-ui [player]="'white'"></app-player-ui>
+    <app-player-ui [player]="'white'" *ngIf="game?.activePlayer"></app-player-ui>
     <div class="middleButtonContainer">
       <div class="passContainer" (click)="pass()">
         <div class="passButtonWhiteContainer" [ngStyle]="{'animation': animationReset + ' 2s ease-in-out', 'animation-direction': directionToggle, 'animation-fill-mode': fillToggle}" >
@@ -76,7 +76,7 @@
           <p>Pass</p>
         </div>
       </div>
-      <div class="resignContainer">
+      <div class="resignContainer" (click)="resign()">
         <div class="passButtonWhiteContainer" [ngStyle]="{'animation': animationReset + ' 2s ease-in-out', 'animation-direction': directionToggle, 'animation-fill-mode': fillToggle}" >
           <div class="passButtonWhite resignButton">
             <p>Resign</p>
@@ -87,5 +87,9 @@
         </div>
       </div>
   </div>
-    <app-player-ui [player]="'black'"></app-player-ui>
+    <app-player-ui [player]="'black'" *ngIf="game?.activePlayer"></app-player-ui>
+  </div>
+
+  <div class="end-game-container" *ngIf="!game?.activeGame">
+    <app-end-game [game]="game"></app-end-game>
   </div>
