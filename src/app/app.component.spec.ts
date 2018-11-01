@@ -41,25 +41,15 @@ describe('AppComponent', () => {
   });
 
   it('given a game with no dead stones remaining, resolveScore will correctly attribute surrounded empty points to the appropriate player, tabulate scores, and give the winner of the game and the margin of victory', () => {
-    const player1 = new Player("Player 1");
-    const player2 = new Player("Player 2");
+    const player1 = new Player("Roofus");
+    const player2 = new Player("Doofus");
     let game = new Game(9,player1,player2);
-    game.gameState = [
-      ["white",null,"white","white","white","black",null,"black","white"],
-      [null,"white","white","white","black","black",null,"black","white"],
-      ["white","white","black","black","black","black","black","black","white"],
-      ["white","black","black","black","white","black","white","white","white"],
-      ["white","black","black","white","white","black","white",null,null],
-      ["black","black","black","black","white","white",null,"white",null],
-      ["black",null,"black","black","white","white",null,"white",null],
-      ["black","black","white","white","white",null,null,"white",null],
-      ["white","white","white","white",null,null,null,"white",null]
-    ];
+    game.gameState = [[null,null,null,null,null,null,null,null,null],[null,null,null,null,null,null,null,null,null],[null,null,null,null,null,null,null,null,null],["black","black","black","black","black","black","black","black","black"],["white","white","white","white","white","white","white","white","white"],[null,null,null,null,null,null,null,null,null],["black","black","black",null,"white","white","white","white","white"],["black",null,"black",null,"white",null,null,null,null],["black",null,"black",null,"white",null,null,null,null]];
     game.resolveScore();
     console.log("Black score: " + game.blackScore);
     console.log("White score: " + game.whiteScore);
-    console.log("Winner: " + game.winner);
+    console.log("Winner: " + game.winner.name);
     console.log("Margin of victory: " + game.margin);
-    expect(game.winner).toEqual(player1);
+    expect(game.winner).toEqual(player2);
   });
 });

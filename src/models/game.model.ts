@@ -147,7 +147,6 @@ export class Game {
       if (group.liberties.length == 0) {this.illegalMove(stone);}
       else {
         this.ko = killed;
-        console.log(this.gameState);
         this.nextTurn();
       }
     }
@@ -179,6 +178,7 @@ export class Game {
   }
 
   resolveScore() {
+    // get all empty points
     let territories = [];
     for (let i = 0; i < this.dimension; i++) {
       for (let j = 0; j < this.dimension; j++) {
@@ -187,53 +187,58 @@ export class Game {
         }
       }
     }
+
     while (territories.length > 0) {
+
+      // build a local group
       const p = territories.shift();
-      const queue = [p];
-      const group = [p];
-      const visited = [];
-      while (queue.length > 0) {
-        const next = queue.shift();
-        territories.forEach(point => {
-          if (point[0] == next[0] && point[1] == next[1]) {
-            territories.splice(territories.indexOf(point),1);
-          }
-        })
-        let neighbors = this.checkAdjacencies(next);
+      const queue = [p]; // local queue, points in here are adjacent to some element of group, need to check their neighbors
+      const group = [p]; // will fill with empty points connected via path thru empty points to base point p.
+      const visited = [p]; // these points have been a neighbor to some element of the queue and do not need to be checked again to determine membership in group
+      while (queue.length > 0) { // there are empty points within the same group as the base point that have not been searched, loop through again
+        const next = queue.shift(); // remove first element from queue, check its neighbors for membership in group
+        let neighbors = this.checkAdjacencies(next); // get neighbors of next
         neighbors.forEach(neighbor => {
           let skip = false;
           visited.forEach(visitedPoint => {
-            if (neighbor[0] === visitedPoint[0] && neighbor[1] === visitedPoint[1]) { skip = true; }
+            if (neighbor[0] == visitedPoint[0] && neighbor[1] == visitedPoint[1]) { skip = true; }
           })
           if (skip == false) {
-            if (this.gameState[neighbor[0]][neighbor[1]] == null) {
-              group.push(neighbor);
-              queue.push(neighbor);
+            if (this.gameState[neighbor[0]][neighbor[1]] == null) { // this neighbor of next is an empty point
+              group.push(neighbor); // the neighbor of next is empty and is part of the same group
+              queue.push(neighbor); // need to check neighbor's neighbors for membership in the group, add to search queue to ensure it is checked
+              territories.forEach(point => { // if neighbor is empty, need to remove it from territories, as it is in the same group as p and accounted for
+                if (point[0] == neighbor[0] && point[1] == neighbor[1]) {
+                  territories.splice(territories.indexOf(point),1);
+                }
+              })
             }
           }
-          visited.push(neighbor);
+          visited.push(neighbor); // whether neighbor is empty or not, add to visited to skip it in subsequent loops
         })
-        let border: boolean[] = [false, false];
-        group.forEach(emptyPt => {
-          let neighbors = this.checkAdjacencies(emptyPt);
-          neighbors.forEach(neighbor => {
-            if (this.gameState[neighbor[0]][neighbor[1]] == "white") {
-              border[0] = true;
-            } else if (this.gameState[neighbor[0]][neighbor[1]] == "black") {
-              border[1] = true;
-            }
-          })
+      }
+
+      // score the group
+      let border: boolean[] = [false, false];
+      group.forEach(emptyPt => {
+        let neighbors = this.checkAdjacencies(emptyPt);
+        neighbors.forEach(neighbor => {
+          if (this.gameState[neighbor[0]][neighbor[1]] == "white") {
+            border[0] = true;
+          } else if (this.gameState[neighbor[0]][neighbor[1]] == "black") {
+            border[1] = true;
+          }
         })
-        if (border[0] == true && border[1] == false) {
-          console.log("Group found for white: ", group);
-          this.whiteScore += group.length;
-        }
-        else if (border[0] == false && border[1] == true) {
-          console.log("Group found for black: ", group);
-          this.blackScore += group.length;
-        }
+      })
+      if (border[0] == true && border[1] == false) {
+        this.whiteScore += group.length;
+      }
+      else if (border[0] == false && border[1] == true) {
+        this.blackScore += group.length;
       }
     }
+
+    // both while loops finished, all groups found and accounted for, calculate final score and winner.
     this.whiteScore += this.whiteCaptures;
     this.blackScore += this.blackCaptures;
     if (this.whiteScore - this.blackScore > 0) {
