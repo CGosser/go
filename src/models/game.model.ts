@@ -239,7 +239,7 @@ export class Game {
     }
 
     // both while loops finished, all groups found and accounted for, calculate final score and winner.
-    this.whiteScore += this.whiteCaptures;
+    this.whiteScore = this.whiteScore + this.whiteCaptures + this.komi;
     this.blackScore += this.blackCaptures;
     if (this.whiteScore - this.blackScore > 0) {
       this.winner = this.whitePlayer;
@@ -253,10 +253,15 @@ export class Game {
   }
 
   translateMatrixToFB() {
+
     return JSON.stringify(this.gameState);
   }
 
   translateFBToMatrix(input: string) {
-    return JSON.parse(input);
+    if (input) {
+      return JSON.parse(input);
+    } else {
+      return this.createNewGameState(this.dimension);
+    }
   }
 }
