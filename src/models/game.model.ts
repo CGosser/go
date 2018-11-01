@@ -14,6 +14,7 @@ export class Game {
   whiteScore: number;
   blackScore: number;
   winner: Player;
+  resignedPlayer: Player;
   margin: number;
   ko: number[];
   komi: number;
@@ -34,6 +35,9 @@ export class Game {
     this.blackScore = 0;
     this.ko = [-1,-1];
     this.komi = this.decideKomi();
+    this.winner = new Player("none");
+    this.margin = 0;
+    this.resignedPlayer = new Player("none");
   }
 
   createNewGameState(N: number) {
@@ -80,7 +84,7 @@ export class Game {
     const queue = [point];
     const group = [point];
     const liberties: any[] = [];
-    const visited: any[] = [];
+    const visited: any[] = [point];
     const i = point[0];
     const j = point[1];
     const color = this.gameState[i][j];
@@ -171,8 +175,14 @@ export class Game {
   }
 
   resign() {
-    if (this.passivePlayer == "white") {this.winner = this.whitePlayer;}
-    else {this.winner = this.blackPlayer;}
+    if (this.passivePlayer == "white") {
+      this.winner = this.whitePlayer;
+      this.resignedPlayer = this.blackPlayer;
+    }
+    else {
+      this.winner = this.blackPlayer;
+      this.resignedPlayer = this.whitePlayer;
+    }
     this.margin = 0;
     this.activeGame = false;
   }
@@ -257,6 +267,10 @@ export class Game {
   }
 
   translateFBToMatrix(input: string) {
-    return JSON.parse(input);
+    if (input){
+      return JSON.parse(input);
+    } else {
+      return this.createNewGameState(this.dimension);
+    }
   }
 }

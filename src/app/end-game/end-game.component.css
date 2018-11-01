@@ -1,0 +1,47 @@
+.endGame{
+  position: relative;
+  opacity: 0;
+  animation: endGameFade 2s;
+  animation-fill-mode: forwards;
+}
+
+.screen9 {
+  position:absolute;
+  top: -530px;
+  height: 500px;
+  width: 100vw;
+  background-color: white;
+  z-index: 10;
+  opacity: .5;
+}
+.screen13 {
+  position:absolute;
+  top: -680px;
+  height: 650px;
+  width: 100vw;
+  background-color: white;
+  z-index: 10;
+  opacity: .5;
+}
+.screen19 {
+  position:absolute;
+  top: -930px;
+  height: 900px;
+  width: 100vw;
+  background-color: white;
+  z-index: 10;
+  opacity: .5;
+}
+
+
+.endMessage {
+  text-align: center;
+  margin-top: 40px;
+}
+
+
+@keyframes endGameFade {
+  100%{
+    opacity: 1;
+  }
+}

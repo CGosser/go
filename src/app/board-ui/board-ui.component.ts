@@ -29,6 +29,7 @@ export class BoardUIComponent implements OnInit {
   constructor(private gameService: GameService, private route: ActivatedRoute, private location: Location) { }
 
   ngOnInit() {
+    this.playerChange();
     this.route.params.forEach((urlParameters) => {
       this.key = urlParameters['key'];
     })
@@ -36,7 +37,6 @@ export class BoardUIComponent implements OnInit {
       const player1 = new Player(response.whitePlayer);
       const player2 = new Player(response.blackPlayer);
       this.game = new Game(response.dimension, player1, player2);
-      console.log(this.game);
       this.size = this.game.dimension;
       this.rows = Array(this.size);
       this.columns = Array(this.size);
@@ -46,14 +46,16 @@ export class BoardUIComponent implements OnInit {
       this.game.blackCaptures = response.blackCaptures;
       this.game.whiteCaptures = response.whiteCaptures;
       this.game.ko = response.ko;
+      this.game.activeGame = response.activeGame;
+      this.game.resignedPlayer = response.resignedPlayer;
+      this.game.winner = response.winner;
+      this.game.margin = response.margin;
+      this.playerChange();
     });
   }
 
-  placeStone(stone: number[]) {
-    this.playerBefore = this.game.activePlayer;
-    this.game.placeStone([stone[0], stone[1]]);
-    this.playerAfter = this.game.activePlayer;
-    if(this.playerBefore !== this.playerAfter) {
+  playerChange(){
+    console.log("true");
     if (this.directionToggle == "normal"){
         this.directionToggle = "reverse";
         this.animationReset = "colorChangeWhite";
@@ -63,8 +65,23 @@ export class BoardUIComponent implements OnInit {
         this.animationReset = "colorChangeBlack";
         this.fillToggle = "forwards";
       }
+  }
+
+  placeStone(stone: number[]) {
+    this.playerBefore = this.game.activePlayer;
+    this.game.placeStone([stone[0], stone[1]]);
+    this.playerAfter = this.game.activePlayer;
+    if(this.playerBefore !== this.playerAfter) {
+      // if (this.directionToggle == "normal"){
+      //     this.directionToggle = "reverse";
+      //     this.animationReset = "colorChangeWhite";
+      //     this.fillToggle = "backwards";
+      //   } else {
+      //     this.directionToggle = "normal";
+      //     this.animationReset = "colorChangeBlack";
+      //     this.fillToggle = "forwards";
+      //   }
       const testObj = this.game.translateMatrixToFB();
-      console.log(testObj);
       const gameStateInFirebase = this.gameService.getCurrentGame(this.key);
       gameStateInFirebase.update({
         activePlayer: this.game.activePlayer,
@@ -87,6 +104,16 @@ export class BoardUIComponent implements OnInit {
     // }
 
   }
+  endGameUpdate() {
+    const gameStateInFirebase = this.gameService.getCurrentGame(this.key);
+    gameStateInFirebase.update({
+      activeGame: this.game.activeGame,
+      winner: this.game.winner,
+      margin: this.game.margin,
+      resignedPlayer: this.game.resignedPlayer
+    })
+  }
+
   pass(){
     this.game.pass();
     if (this.directionToggle == "normal"){
@@ -98,7 +125,12 @@ export class BoardUIComponent implements OnInit {
       this.animationReset = "colorChangeBlack";
       this.fillToggle = "forwards";
     }
+    this.endGameUpdate();
+  }
 
+  resign(){
+    this.game.resign();
+    this.endGameUpdate()
   }
 
 }

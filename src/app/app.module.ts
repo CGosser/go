@@ -9,6 +9,7 @@ import { AppComponent } from './app.component';
 import { BoardUIComponent } from './board-ui/board-ui.component';
 import { StartScreenComponent } from './start-screen/start-screen.component';
 import { PlayerUiComponent } from './player-ui/player-ui.component';
+import { EndGameComponent } from './end-game/end-game.component';
 
 export const firebaseConfig = {
   apiKey: masterFirebaseConfig.apiKey,
@@ -22,7 +23,8 @@ export const firebaseConfig = {
     AppComponent,
     BoardUIComponent,
     StartScreenComponent,
-    PlayerUiComponent
+    PlayerUiComponent,
+    EndGameComponent
   ],
   imports: [
     BrowserModule,
