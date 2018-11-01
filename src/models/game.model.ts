@@ -14,6 +14,7 @@ export class Game {
   whiteScore: number;
   blackScore: number;
   winner: Player;
+  resignedPlayer: Player;
   margin: number;
   ko: number[];
   komi: number;
@@ -34,6 +35,9 @@ export class Game {
     this.blackScore = 0;
     this.ko = [-1,-1];
     this.komi = this.decideKomi();
+    this.winner = new Player("none");
+    this.margin = 0;
+    this.resignedPlayer = new Player("none");
   }
 
   createNewGameState(N: number) {
@@ -171,8 +175,14 @@ export class Game {
   }
 
   resign() {
-    if (this.passivePlayer == "white") {this.winner = this.whitePlayer;}
-    else {this.winner = this.blackPlayer;}
+    if (this.passivePlayer == "white") {
+      this.winner = this.whitePlayer;
+      this.resignedPlayer = this.blackPlayer;
+    }
+    else {
+      this.winner = this.blackPlayer;
+      this.resignedPlayer = this.whitePlayer;
+    }
     this.margin = 0;
     this.activeGame = false;
   }

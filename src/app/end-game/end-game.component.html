@@ -1,5 +1,17 @@
-<div class="hideGame">
-  {{game?.winner.name.name}}
-  {{game?.margin}}
-  {{log(game?.winner.name.name)}}
+<div *ngIf="game?.dimension" class="endGame">
+  <div class="screen{{game.dimension}}">
+
+  </div>
+  <div class="endMessage">
+    <p>This game has ended.</p>
+    <div *ngIf="game?.winner">
+      {{game.winner.name.name}} has won.
+    </div>
+    <div *ngIf="game?.resignedPlayer.name == 'none'">
+      {{game.winner.name.name}} won by {{game.margin}} points.
+    </div>
+    <div *ngIf="game?.resignedPlayer.name !== 'none'">
+      {{game.resignedPlayer.name.name}} resigned.
+    </div>
+  </div>
 </div>

@@ -29,6 +29,7 @@ export class BoardUIComponent implements OnInit {
   constructor(private gameService: GameService, private route: ActivatedRoute, private location: Location) { }
 
   ngOnInit() {
+    this.playerChange();
     this.route.params.forEach((urlParameters) => {
       this.key = urlParameters['key'];
     })
@@ -45,6 +46,10 @@ export class BoardUIComponent implements OnInit {
       this.game.blackCaptures = response.blackCaptures;
       this.game.whiteCaptures = response.whiteCaptures;
       this.game.ko = response.ko;
+      this.game.activeGame = response.activeGame;
+      this.game.resignedPlayer = response.resignedPlayer;
+      this.game.winner = response.winner;
+      this.game.margin = response.margin;
       this.playerChange();
     });
   }
@@ -99,6 +104,16 @@ export class BoardUIComponent implements OnInit {
     // }
 
   }
+  endGameUpdate() {
+    const gameStateInFirebase = this.gameService.getCurrentGame(this.key);
+    gameStateInFirebase.update({
+      activeGame: this.game.activeGame,
+      winner: this.game.winner,
+      margin: this.game.margin,
+      resignedPlayer: this.game.resignedPlayer
+    })
+  }
+
   pass(){
     this.game.pass();
     if (this.directionToggle == "normal"){
@@ -110,9 +125,12 @@ export class BoardUIComponent implements OnInit {
       this.animationReset = "colorChangeBlack";
       this.fillToggle = "forwards";
     }
+    this.endGameUpdate();
   }
 
   resign(){
     this.game.resign();
+    this.endGameUpdate()
   }
+
 }

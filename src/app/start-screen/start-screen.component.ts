@@ -46,8 +46,16 @@ export class StartScreenComponent implements OnInit {
       let player1;
       let player2;
       if (coinFlip == 0) {
-        player1 = new Player(gameInfo[0]);
-        player2 = new Player(gameInfo[1]);
+        if (!gameInfo[0]){
+          player1 = new Player("Player 1");
+        } else {
+          player1 = new Player(gameInfo[0]);
+        }
+        if (!gameInfo[1]){
+          player2 = new Player("Player 2");
+        } else {
+          player2 = new Player(gameInfo[1]);
+        }
       } else {
         if (!gameInfo[1]){
           player1 = new Player("Player 1");
