@@ -65,15 +65,27 @@
   </div>
   <div class="playerInfo">
     <app-player-ui [player]="'white'"></app-player-ui>
-    <div class="passContainer" (click)="pass()">
-      <div class="passButtonWhiteContainer" [ngStyle]="{'animation': animationReset + ' 2s ease-in-out', 'animation-direction': directionToggle, 'animation-fill-mode': fillToggle}" >
-        <div class="passButtonWhite">
+    <div class="middleButtonContainer">
+      <div class="passContainer" (click)="pass()">
+        <div class="passButtonWhiteContainer" [ngStyle]="{'animation': animationReset + ' 2s ease-in-out', 'animation-direction': directionToggle, 'animation-fill-mode': fillToggle}" >
+          <div class="passButtonWhite">
+            <p>Pass</p>
+          </div>
+        </div>
+        <div class="passButtonBlack">
           <p>Pass</p>
         </div>
       </div>
-      <div class="passButtonBlack">
-        <p>Pass</p>
+      <div class="resignContainer">
+        <div class="passButtonWhiteContainer" [ngStyle]="{'animation': animationReset + ' 2s ease-in-out', 'animation-direction': directionToggle, 'animation-fill-mode': fillToggle}" >
+          <div class="passButtonWhite resignButton">
+            <p>Resign</p>
+          </div>
+        </div>
+        <div class="passButtonBlack resignButton">
+          <p>Resign</p>
+        </div>
       </div>
-    </div>
+  </div>
     <app-player-ui [player]="'black'"></app-player-ui>
   </div>

@@ -59,7 +59,10 @@ export class StartScreenComponent implements OnInit {
           return b.$key-a.$key;
         });
         const gameKey = response[response.length-1].$key;
-        this.router.navigate(['game', gameKey]);
+        setTimeout(() => {
+     this.router.navigate(['game', gameKey])
+   }
+   , 3000);
       });
     }
   }
