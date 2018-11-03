@@ -14,7 +14,7 @@ Start Screen
 ![Start Screen](./src/assets/screenshot1.png)
 
 Game in progress
-![Game Screen](./src/assets/screenshot1.png)
+![Game Screen](./src/assets/screenshot2.png)
 
 End game scoring
 ![End game](./src/assets/screenshot3.png)
@@ -68,14 +68,14 @@ export const masterFirebaseConfig = {
   * Create a new project.
   * Within your new project, click *Database*, scroll down to *Or choose Realtime Database*, and select *Create database*. Click *Enable*.
   * In Project Overview, click the Settings icon, and choose *Project Settings*. Scroll down this page, and click *Add Firebase to your web app*. A popup will appear. In *api-keys.ts*, replace *"XXXXXXXXXXXX"*, the values for *apiKey* and *messagingSenderId*, with your unique values that are given here in the popup. Save *api-keys.ts* and close.
- 
+
 * *Open*
   * Back in the terminal, enter
 ```
 $ ng serve
 ```
   * In your browser, in the address bar, navigate to *localhost:4200*.
-  
+
 * *Play*
   * Find a friend and throw down some stones, baby.
 
